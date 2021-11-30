@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-layout>
     <v-navigation-drawer
       app
       v-model="drawer"
@@ -38,7 +38,7 @@
         <slot />
       </v-container>
     </v-main>
-  </v-app>
+  </v-layout>
 </template>
 
 <script lang="ts">
