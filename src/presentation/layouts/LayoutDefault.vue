@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-layout>
     <v-navigation-drawer
       app
       v-model="drawer"
@@ -29,16 +29,16 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app>
+    <v-app-bar app max-height="56" elevation="3" color="white">
       <!-- -->
     </v-app-bar>
 
-    <v-main>
+    <v-main class="pl-14 pt-14">
       <v-container fluid>
         <slot />
       </v-container>
     </v-main>
-  </v-app>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -53,7 +53,7 @@ export default Vue.extend({
       items: [
         { title: "Дашборд", icon: "mdi-home" },
         { title: "Дома", icon: "mdi-map-outline" },
-        { title: "Добавить", icon: "mdi-plus-circle" },
+        { title: "Заявки", icon: "mdi-plus-circle" },
         { title: "Календарь", icon: "mdi-calendar" },
       ],
       mini: true,
