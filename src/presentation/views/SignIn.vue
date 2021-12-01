@@ -17,7 +17,7 @@
       ></v-text-field>
       <v-text-field
         v-model="form.password"
-        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :append-icon="show ? icons.mdiEye : icons.mdiEyeOff"
         :type="show ? 'text' : 'password'"
         label="Пароль"
         :rules="passwordRules"
@@ -35,6 +35,7 @@ import { VueMaskDirective } from "v-mask";
 import Vue from "vue";
 import { purePhoneNumber, isPhoneLength } from "@/domain/purePhoneNumber";
 import { ROUTES } from "@/domain/routes";
+import { mdiEye, mdiEyeOff } from "@mdi/js";
 
 export default Vue.extend({
   data() {
@@ -51,6 +52,10 @@ export default Vue.extend({
       },
       valid: false,
       show: false,
+      icons: {
+        mdiEye,
+        mdiEyeOff,
+      },
     };
   },
   methods: {
