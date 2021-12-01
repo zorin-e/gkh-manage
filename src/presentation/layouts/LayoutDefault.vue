@@ -30,9 +30,19 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app max-height="56" elevation="3" color="white">
-      <!-- -->
+      <v-spacer></v-spacer>
+      <v-col class="d-flex" cols="5">
+        <v-icon class="mr-2">{{ mdiCity }}</v-icon>
+        <v-select
+          :items="companies"
+          label="Управляющая компания"
+          class="mr-10"
+          hide-details
+          :value="1"
+        />
+      </v-col>
+      <right-menu />
     </v-app-bar>
-
     <v-main class="pl-14 pt-14">
       <v-container fluid>
         <slot />
@@ -43,20 +53,30 @@
 
 <script lang="ts">
 import Vue from "vue";
-
+import RightMenu from "@/presentation/components/Layouts/RightMenu.vue";
+import {
+  mdiMapOutline,
+  mdiHome,
+  mdiPlusCircle,
+  mdiCalendar,
+  mdiCity,
+} from "@mdi/js";
 export default Vue.extend({
-  name: "App",
-
+  components: {
+    RightMenu,
+  },
   data() {
     return {
       drawer: true,
       items: [
-        { title: "Дашборд", icon: "mdi-home" },
-        { title: "Дома", icon: "mdi-map-outline" },
-        { title: "Заявки", icon: "mdi-plus-circle" },
-        { title: "Календарь", icon: "mdi-calendar" },
+        { title: "Дашборд", icon: mdiHome },
+        { title: "Дома", icon: mdiMapOutline },
+        { title: "Заявки", icon: mdiPlusCircle },
+        { title: "Календарь", icon: mdiCalendar },
       ],
+      companies: [{ text: "Интехсервис", value: 1 }],
       mini: true,
+      mdiCity,
     };
   },
 });
