@@ -1,6 +1,5 @@
 <template>
   <v-col xs="12" sm="10" md="9" lg="7">
-    <!-- <h2 v-if="$route.meta.title" class="font-weight-regular">{{$route.meta.title}}</h2> -->
     <div class="text-right">
       <v-btn
         color="primary"
