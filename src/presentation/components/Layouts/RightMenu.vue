@@ -9,7 +9,11 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="(item, index) in settingsMenu" :key="index">
+        <v-list-item
+          v-for="(item, index) in settingsMenu"
+          :key="index"
+          :to="{ name: item.to }"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -39,12 +43,15 @@ export default Vue.extend({
       settingsMenu: [
         {
           title: ROUTES.companies.title,
+          to: ROUTES.companies.name,
         },
         {
           title: ROUTES.employers.title,
+          to: ROUTES.employers.name,
         },
         {
           title: ROUTES.services.title,
+          to: ROUTES.services.name,
         },
       ],
     };

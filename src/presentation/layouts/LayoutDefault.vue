@@ -18,7 +18,12 @@
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          :to="{ name: item.to }"
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -45,6 +50,7 @@
     </v-app-bar>
     <v-main class="pl-14 pt-14">
       <v-container fluid>
+        <h2 v-if="title" class="font-weight-regular">{{ title }}</h2>
         <slot />
       </v-container>
     </v-main>
@@ -61,6 +67,7 @@ import {
   mdiCalendar,
   mdiCity,
 } from "@mdi/js";
+import { ROUTES } from "@/domain/routes";
 export default Vue.extend({
   components: {
     RightMenu,
@@ -69,15 +76,25 @@ export default Vue.extend({
     return {
       drawer: true,
       items: [
-        { title: "Дашборд", icon: mdiHome },
-        { title: "Дома", icon: mdiMapOutline },
-        { title: "Заявки", icon: mdiPlusCircle },
-        { title: "Календарь", icon: mdiCalendar },
+        { title: "Дашборд", icon: mdiHome, to: ROUTES.dashboard.name },
+        { title: "Дома", icon: mdiMapOutline, to: ROUTES.houses.name },
+        { title: "Заявки", icon: mdiPlusCircle, to: ROUTES.issues.name },
+        { title: "Календарь", icon: mdiCalendar, to: ROUTES.calendar.name },
       ],
       companies: [{ text: "Интехсервис", value: 1 }],
       mini: true,
       mdiCity,
     };
+  },
+  computed: {
+    title(): string {
+      const meta = this.$route.meta;
+      if (meta?.title) {
+        if (!meta?.isModal) return meta.title;
+        return this.$route.matched[0]?.meta.title;
+      }
+      return "";
+    },
   },
 });
 </script>

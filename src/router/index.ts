@@ -19,6 +19,10 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/",
+    redirect: { name: ROUTES.dashboard.name },
+  },
+  {
+    path: "/dashboard",
     name: ROUTES.dashboard.name,
     component: Dashboard,
     meta: {
@@ -28,10 +32,80 @@ const routes: Array<RouteConfig> = [
   {
     path: "/houses",
     name: ROUTES.houses.name,
-    component: () => import("@/presentation/views/Houses.vue"),
+    component: () => import("@/presentation/views/Houses/List.vue"),
     meta: {
+      title: ROUTES.houses.title,
       layout: LayoutDefault,
     },
+    children: [
+      {
+        path: "add",
+        name: ROUTES.addHouse.name,
+        component: () => import("@/presentation/views/Houses/Modal.vue"),
+        meta: {
+          title: ROUTES.addHouse.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+      {
+        path: ":id",
+        name: ROUTES.editHouse.name,
+        component: () => import("@/presentation/views/Houses/Modal.vue"),
+        meta: {
+          title: ROUTES.editHouse.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/companies",
+    name: ROUTES.companies.name,
+    component: () => import("@/presentation/views/Companies/List.vue"),
+    meta: {
+      title: ROUTES.companies.title,
+      layout: LayoutDefault,
+    },
+    children: [
+      {
+        path: "add",
+        name: ROUTES.addCompany.name,
+        component: () => import("@/presentation/views/Companies/Modal.vue"),
+        meta: {
+          title: ROUTES.addCompany.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+      {
+        path: ":id",
+        name: ROUTES.editCompany.name,
+        component: () => import("@/presentation/views/Companies/Modal.vue"),
+        meta: {
+          title: ROUTES.editCompany.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/employers",
+    name: ROUTES.employers.name,
+  },
+  {
+    path: "/services",
+    name: ROUTES.services.name,
+  },
+  {
+    path: "/issues",
+    name: ROUTES.issues.name,
+  },
+  {
+    path: "/calendar",
+    name: ROUTES.calendar.name,
   },
 ];
 
