@@ -45,6 +45,7 @@
     </v-app-bar>
     <v-main class="pl-14 pt-14">
       <v-container fluid>
+        <h2 v-if="title" class="font-weight-regular">{{ title }}</h2>
         <slot />
       </v-container>
     </v-main>
@@ -78,6 +79,16 @@ export default Vue.extend({
       mini: true,
       mdiCity,
     };
+  },
+  computed: {
+    title(): string {
+      const meta = this.$route.meta;
+      if (meta?.title) {
+        if (!meta?.isModal) return meta.title;
+        return this.$route.matched[0]?.meta.title;
+      }
+      return "";
+    },
   },
 });
 </script>

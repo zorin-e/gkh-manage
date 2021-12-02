@@ -12,8 +12,16 @@ export const ROUTES: Routes = {
     name: "Dashboard",
   },
   houses: {
-    title: "Дома",
+    title: "Список домов",
     name: "Houses",
+  },
+  addHouse: {
+    title: "Новый дом",
+    name: "AddHouse",
+  },
+  editHouse: {
+    title: "Редактирование дома",
+    name: "EditHouse",
   },
   applications: {
     title: "Заявки",
