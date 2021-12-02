@@ -35,6 +35,14 @@ export const ROUTES: Routes = {
     title: "Управляющие компании",
     name: "Companies",
   },
+  addCompany: {
+    title: "Новая УК",
+    name: "AddCompany",
+  },
+  editCompany: {
+    title: "Редатирование УК",
+    name: "EditCompany",
+  },
   employers: {
     title: "Сотрудники",
     name: "Employers",
@@ -42,5 +50,9 @@ export const ROUTES: Routes = {
   services: {
     title: "Услуги",
     name: "Services",
+  },
+  issues: {
+    title: "Заявки",
+    name: "Issues",
   },
 };
