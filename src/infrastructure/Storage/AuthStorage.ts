@@ -1,4 +1,4 @@
-import { Http } from "@/infrastructure/http";
+import { Http } from "@/infrastructure/Http";
 import { TokenType } from "../Token";
 import { TokenConnect } from "../Token/TokenConnect.interface";
 

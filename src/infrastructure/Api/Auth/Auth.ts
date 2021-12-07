@@ -1,4 +1,4 @@
-import { Http, Response } from "@/infrastructure/http";
+import { Http, Response } from "@/infrastructure/Http";
 import { SignInRequest, SignInResponse } from "./types";
 export class Auth {
   constructor(private http: Http) {}
