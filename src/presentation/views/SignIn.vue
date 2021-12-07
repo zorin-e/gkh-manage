@@ -1,5 +1,9 @@
 <template>
-  <v-form :class="[$style.form, 'pa-10']" v-model="valid" @submit="submit">
+  <v-form
+    :class="[$style.form, 'pa-10']"
+    v-model="valid"
+    @submit.prevent="submit"
+  >
     <div :class="$style.wrapper">
       <v-avatar color="primary" size="48"></v-avatar>
       <div :class="$style.welcome" class="font-weight-black mt-3 mb-8">
@@ -9,12 +13,12 @@
         Вход в систему управления ИнТехСервис
       </div>
       <v-text-field
-        v-model="form.phone"
-        label="Номер телефона"
-        v-mask="'+7(###)###-##-##'"
+        v-model="form.email"
+        label="Электронная почта"
         required
-        :rules="phoneRules"
-      ></v-text-field>
+        :rules="emailRules"
+        placeholder="example@email.com"
+      />
       <v-text-field
         v-model="form.password"
         :append-icon="show ? icons.mdiEye : icons.mdiEyeOff"
@@ -23,31 +27,45 @@
         :rules="passwordRules"
         @click:append="show = !show"
       ></v-text-field>
-      <v-btn type="submit" color="primary" :disabled="!valid" class="mt-5">
+      <v-btn
+        type="submit"
+        color="primary"
+        :loading="isLoading"
+        :disabled="!valid || isLoading"
+        class="mt-5"
+      >
         Войти
       </v-btn>
     </div>
+    <v-alert
+      type="error"
+      v-model="isError"
+      :class="$style.error"
+      dismissible
+      transition="scale-transition"
+      >{{ errorText }}</v-alert
+    >
   </v-form>
 </template>
 
 <script lang="ts">
 import { VueMaskDirective } from "v-mask";
 import Vue from "vue";
-import { purePhoneNumber, isPhoneLength } from "@/domain/purePhoneNumber";
 import { ROUTES } from "@/domain/routes";
 import { mdiEye, mdiEyeOff } from "@mdi/js";
+import { authService } from "@/bootstrap";
+import { isValidEmail } from "@/domain/isValidEmail";
 
 export default Vue.extend({
   data() {
     return {
-      phoneRules: [
-        (v: string) => !!v || "Заполните номер телефона",
-        (v: string) =>
-          isPhoneLength(purePhoneNumber(v)) || "Не верный номер телефона",
-      ],
       passwordRules: [(v: string) => !!v || "Введите пароль"],
+      emailRules: [
+        (v: string) => !!v || "Введите электронную почту",
+        (email: string) => isValidEmail(email) || "Не верная электронная почта",
+      ],
       form: {
-        phone: "",
+        email: "",
         password: "",
       },
       valid: false,
@@ -56,10 +74,24 @@ export default Vue.extend({
         mdiEye,
         mdiEyeOff,
       },
+      isError: false,
+      errorText: "",
+      isLoading: false,
     };
   },
   methods: {
-    submit() {
+    // TODO: needs to global notifcations
+    async submit() {
+      this.isError = false;
+      this.isLoading = true;
+      const { success, payload } = await authService.signIn(this.form);
+      this.isLoading = false;
+      if (!success) {
+        this.errorText = payload.message;
+        this.isError = true;
+        return;
+      }
+      this.isError = false;
       this.$router.push({ name: ROUTES.dashboard.name });
     },
   },
@@ -94,5 +126,11 @@ export default Vue.extend({
 .title {
   letter-spacing: 0.7px;
   font-size: 24px;
+}
+
+.error {
+  position: fixed !important;
+  bottom: 0;
+  right: 20px;
 }
 </style>

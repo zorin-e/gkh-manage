@@ -1,4 +1,5 @@
-import { AuthService } from "./domain/Services/Auth/AuthService";
+import { AuthService } from "./domain/Services/Auth";
+import { SignOutService } from "./domain/Services/SignOut";
 import { Auth } from "./infrastructure/Api/Auth";
 import { Http } from "./infrastructure/Http";
 import { Axios } from "./infrastructure/Http";
@@ -10,5 +11,6 @@ const http = new Http(new Axios());
 const authStorage = new AuthStorage(http, authToken);
 authStorage.set(authToken.get());
 const authService = new AuthService(new Auth(http), authStorage);
+const signOutService = new SignOutService(authStorage);
 
-export { authStorage, authToken, authService };
+export { authStorage, authToken, authService, signOutService };
