@@ -5,6 +5,7 @@ import LayoutDefault from "@/presentation/layouts/LayoutDefault.vue";
 import LayoutLogin from "@/presentation/layouts/LayoutLogin.vue";
 import SignIn from "@/presentation/views/SignIn.vue";
 import { ROUTES } from "@/domain/routes";
+import { authService, signOutService } from "@/bootstrap";
 
 Vue.use(VueRouter);
 
@@ -113,6 +114,24 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta?.layout === LayoutLogin) {
+    if (authService.isAuth()) {
+      signOutService.logout();
+    }
+    next();
+  } else if (!authService.isAuth()) {
+    next({
+      name: ROUTES.signIn.name,
+      params: {
+        nextUrl: to.fullPath,
+      },
+    });
+  } else {
+    next();
+  }
 });
 
 export default router;
