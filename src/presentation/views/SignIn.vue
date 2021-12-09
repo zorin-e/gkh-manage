@@ -87,7 +87,7 @@ export default Vue.extend({
       const { success, payload } = await authService.signIn(this.form);
       this.isLoading = false;
       if (!success) {
-        this.errorText = payload.message;
+        if (payload.message) this.errorText = payload.message;
         this.isError = true;
         return;
       }

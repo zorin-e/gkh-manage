@@ -23,8 +23,8 @@ export class AuthService {
         },
       };
     }
-    if (payload.token) {
-      this.authStorage.set(payload.token);
+    if (payload.data?.token) {
+      this.authStorage.set(payload.data.token);
     }
     return response;
   }
