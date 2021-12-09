@@ -11,9 +11,14 @@
       </v-btn>
       <v-data-table
         :headers="headers"
-        :items="houses"
-        :items-per-page="5"
+        :items="companies"
+        :items-per-page="options.perpage"
+        :loading="isDataLoading"
+        :server-items-length="total"
+        :options="{ page: options.page }"
         class="elevation-1 mt-5"
+        @update:page="nextPage"
+        @update:items-per-page="changeItemsPerPage"
       >
         <template #item.actions>
           <v-icon class="mr-2">
@@ -43,81 +48,76 @@
 </template>
 
 <script lang="ts">
+import { companiesService } from "@/bootstrap";
 import { ROUTES } from "@/domain/routes";
-import { mdiMagnify, mdiDeleteOutline, mdiPencil } from "@mdi/js";
+import { GetCompanyResponse } from "@/infrastructure/Api/Companies/types";
+import { mdiDeleteOutline, mdiPencil } from "@mdi/js";
 
 import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
+      isDataLoading: false,
       dialogDelete: false,
       routes: { ...ROUTES },
       mdiDelete: mdiDeleteOutline,
       mdiPencil,
       headers: [
         { text: "Название", value: "name" },
-        { text: "Домов", value: "housesCount" },
-        { text: "Сотрудников", value: "employers" },
-        { text: "Пользователей", value: "users" },
+        { text: "Номер телефона", value: "phone" },
+        { text: "Индекс", value: "postcode" },
+        { text: "Адрес", value: "address" },
         { text: "", value: "actions", sortable: false },
       ],
-      houses: [
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Тихий лес",
-          housesCount: 800,
-          employers: 190,
-          users: 300,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-        {
-          name: "Чистые пруды",
-          housesCount: 580,
-          employers: 300,
-          users: 450,
-        },
-      ],
+      companies: [] as Array<GetCompanyResponse>,
+      total: 0,
+      options: {
+        perpage: 10,
+        page: 1,
+      },
     };
+  },
+  methods: {
+    paramsToString(params = {}) {
+      return Object.entries(params).reduce((accum, value) => {
+        if (value[1])
+          accum += (accum ? "&" : "") + `paginate[${value[0]}]=${value[1]}`;
+        return accum;
+      }, "");
+    },
+    async getCompanies() {
+      const requestParams = this.paramsToString(this.options);
+      console.log(requestParams);
+
+      this.isDataLoading = true;
+      const { payload, success } = await companiesService.getAll(requestParams);
+      this.isDataLoading = false;
+      if (success && payload.data) {
+        const { data, pagination } = payload.data;
+        this.companies = data;
+        return {
+          pagination,
+        };
+      }
+      return {};
+    },
+    async init() {
+      const { pagination } = await this.getCompanies();
+      if (pagination) {
+        this.total = pagination.total;
+      }
+    },
+    async nextPage(page: number) {
+      this.options.page = page;
+      this.getCompanies();
+    },
+    changeItemsPerPage(count: number) {
+      this.options.perpage = count;
+      this.getCompanies();
+    },
+  },
+  mounted() {
+    this.init();
   },
 });
 </script>
