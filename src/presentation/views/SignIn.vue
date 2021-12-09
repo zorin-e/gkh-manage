@@ -37,14 +37,6 @@
         Войти
       </v-btn>
     </div>
-    <v-alert
-      type="error"
-      v-model="isError"
-      :class="$style.error"
-      dismissible
-      transition="scale-transition"
-      >{{ errorText }}</v-alert
-    >
   </v-form>
 </template>
 
@@ -59,7 +51,10 @@ import { isValidEmail } from "@/domain/isValidEmail";
 export default Vue.extend({
   data() {
     return {
-      passwordRules: [(v: string) => !!v || "Введите пароль"],
+      passwordRules: [
+        (v: string) => !!v || "Введите пароль",
+        (v: string) => v.length >= 6 || "Пароль должен быть от 6 символов",
+      ],
       emailRules: [
         (v: string) => !!v || "Введите электронную почту",
         (email: string) => isValidEmail(email) || "Не верная электронная почта",
@@ -74,24 +69,22 @@ export default Vue.extend({
         mdiEye,
         mdiEyeOff,
       },
-      isError: false,
-      errorText: "",
       isLoading: false,
     };
   },
   methods: {
-    // TODO: needs to global notifcations
     async submit() {
-      this.isError = false;
       this.isLoading = true;
       const { success, payload } = await authService.signIn(this.form);
       this.isLoading = false;
       if (!success) {
-        this.errorText = payload.message;
-        this.isError = true;
+        if (payload.message)
+          this.$notify({
+            type: "error",
+            title: payload.message,
+          });
         return;
       }
-      this.isError = false;
       this.$router.push({ name: ROUTES.dashboard.name });
     },
   },
@@ -126,11 +119,5 @@ export default Vue.extend({
 .title {
   letter-spacing: 0.7px;
   font-size: 24px;
-}
-
-.error {
-  position: fixed !important;
-  bottom: 0;
-  right: 20px;
 }
 </style>

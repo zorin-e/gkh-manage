@@ -1,7 +1,7 @@
 import { AnyObject } from "@/domain/AnyObject.type";
 
-export interface Response<T> {
+export type ServerResponse = {
   status: number;
-  payload: T | AnyObject;
+  payload: any;
   success: boolean;
-}
+};

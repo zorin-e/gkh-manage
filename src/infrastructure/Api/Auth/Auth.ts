@@ -4,10 +4,12 @@ export class Auth {
   constructor(private http: Http) {}
 
   async signIn(data: SignInRequest): Promise<Response<SignInResponse>> {
-    return this.http.request<SignInResponse>({
-      url: "/auth/login",
-      method: "post",
-      data,
-    });
+    return new Response(
+      await this.http.request({
+        url: "/auth/login",
+        method: "post",
+        data,
+      })
+    );
   }
 }
