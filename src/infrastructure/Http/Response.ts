@@ -1,7 +1,8 @@
+import { errorCodes } from "@/domain/constants/errorCodes";
 import { CommonResponse } from "../Api/types";
 
 export class Response<D> {
-  payload: Readonly<{ data: D | null; message: string | null }>;
+  payload: { data: Readonly<D | null>; message: string | null };
   readonly status: number;
   readonly success: boolean;
 
@@ -17,7 +18,7 @@ export class Response<D> {
     const { data = null, message = null } = payload;
     this.payload = {
       data,
-      message,
+      message: errorCodes.common[status] || message,
     };
     this.status = status;
     this.success = success;
