@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { AnyObject } from "@/domain/AnyObject.type";
 import { Connection } from "./Connection.interface";
 import { Request } from "./Request.type";
-import { Response } from "./Response.type";
+import { ServerResponse } from "./ServerResponse.type";
 
 export class Axios implements Connection {
   private initialHeaders: AnyObject;
@@ -28,12 +28,12 @@ export class Axios implements Connection {
     delete this.allHeaders[header];
   }
 
-  async request<T>({
+  async request({
     url,
     method,
     data,
     config,
-  }: Request): Promise<Response<T>> {
+  }: Request): Promise<ServerResponse> {
     const headers = config?.headers || {};
     const isHeaders = Object.keys(headers).length > 0;
     if (isHeaders) {
@@ -55,10 +55,14 @@ export class Axios implements Connection {
           data,
         });
 
+      const payloadData = response.data.data
+        ? response.data
+        : { data: response.data };
+
       return {
         status: response.status,
         success: true,
-        payload: response.data,
+        payload: payloadData,
       };
     } catch (error: any) {
       const message = error.toJSON().message;
