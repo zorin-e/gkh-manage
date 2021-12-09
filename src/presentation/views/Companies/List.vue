@@ -61,7 +61,7 @@ import {
   GetCompanyResponse,
 } from "@/infrastructure/Api/Companies/types";
 import { mdiDeleteOutline, mdiPencil } from "@mdi/js";
-
+import { objectParamsToString } from "@/domain/objectParamsToString";
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 export default Vue.extend({
@@ -94,15 +94,10 @@ export default Vue.extend({
       getAllCompanies: "getAll",
       getAllShortCompanies: "getAllWithShortData",
     }),
-    paramsToString(params = {}) {
-      return Object.entries(params).reduce((accum, value) => {
-        if (value[1])
-          accum += (accum ? "&" : "") + `paginate[${value[0]}]=${value[1]}`;
-        return accum;
-      }, "");
-    },
     async getCompanies() {
-      const requestParams = this.paramsToString(this.options);
+      const requestParams = objectParamsToString({
+        paginate: { ...this.options },
+      });
       this.isDataLoading = true;
       await this.getAllCompanies(requestParams);
       this.isDataLoading = false;
