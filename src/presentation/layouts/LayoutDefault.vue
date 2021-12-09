@@ -39,11 +39,12 @@
       <v-col class="d-flex" cols="5">
         <v-icon class="mr-2">{{ mdiCity }}</v-icon>
         <v-select
-          :items="companies"
+          :loading="isLoading"
+          :items="listCompanies"
           label="Управляющая компания"
           class="mr-10"
           hide-details
-          :value="1"
+          @change="setCompanyId"
         />
       </v-col>
       <right-menu />
@@ -68,12 +69,15 @@ import {
   mdiCity,
 } from "@mdi/js";
 import { ROUTES } from "@/domain/routes";
+import { mapActions, mapState } from "vuex";
+import { GetCompanyResponse } from "@/infrastructure/Api/Companies/types";
 export default Vue.extend({
   components: {
     RightMenu,
   },
   data() {
     return {
+      isLoading: false,
       drawer: true,
       items: [
         { title: "Дашборд", icon: mdiHome, to: ROUTES.dashboard.name },
@@ -81,12 +85,33 @@ export default Vue.extend({
         { title: "Заявки", icon: mdiPlusCircle, to: ROUTES.issues.name },
         { title: "Календарь", icon: mdiCalendar, to: ROUTES.calendar.name },
       ],
-      companies: [{ text: "Интехсервис", value: 1 }],
+
       mini: true,
       mdiCity,
     };
   },
+  methods: {
+    ...mapActions("companies", {
+      getAllShortCompanies: "getAllWithShortData",
+      setCompanyId: "setCompanyId",
+    }),
+    async getCompanies() {
+      this.isLoading = true;
+      await this.getAllShortCompanies();
+      this.isLoading = false;
+    },
+  },
   computed: {
+    ...mapState("companies", {
+      companies: "shortCompanies",
+      selectedCompanyId: "selectedCompanyId",
+    }),
+    listCompanies(): Map<string, string> {
+      return this.companies.map((company: GetCompanyResponse) => ({
+        text: company.name,
+        value: company.id,
+      }));
+    },
     title(): string {
       const meta = this.$route.meta;
       if (meta?.title) {
@@ -95,6 +120,9 @@ export default Vue.extend({
       }
       return "";
     },
+  },
+  mounted() {
+    this.getCompanies();
   },
 });
 </script>

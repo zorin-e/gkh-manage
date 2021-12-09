@@ -11,10 +11,10 @@
       </v-btn>
       <v-data-table
         :headers="headers"
-        :items="companies"
+        :items="companiesData.data"
         :items-per-page="options.perpage"
         :loading="isDataLoading"
-        :server-items-length="total"
+        :server-items-length="companiesData.pagination.total"
         :options="{ page: options.page }"
         class="elevation-1 mt-5"
         @update:page="nextPage"
@@ -63,6 +63,7 @@ import {
 import { mdiDeleteOutline, mdiPencil } from "@mdi/js";
 
 import Vue from "vue";
+import { mapActions, mapState } from "vuex";
 export default Vue.extend({
   data() {
     return {
@@ -89,6 +90,10 @@ export default Vue.extend({
     };
   },
   methods: {
+    ...mapActions("companies", {
+      getAllCompanies: "getAll",
+      getAllShortCompanies: "getAllWithShortData",
+    }),
     paramsToString(params = {}) {
       return Object.entries(params).reduce((accum, value) => {
         if (value[1])
@@ -99,22 +104,8 @@ export default Vue.extend({
     async getCompanies() {
       const requestParams = this.paramsToString(this.options);
       this.isDataLoading = true;
-      const { payload, success } = await companiesService.getAll(requestParams);
+      await this.getAllCompanies(requestParams);
       this.isDataLoading = false;
-      if (success && payload.data) {
-        const { data, pagination } = payload.data;
-        this.companies = data;
-        return {
-          pagination,
-        };
-      }
-      return {};
-    },
-    async init() {
-      const { pagination } = await this.getCompanies();
-      if (pagination) {
-        this.total = pagination.total;
-      }
     },
     async nextPage(page: number) {
       this.options.page = page;
@@ -151,16 +142,23 @@ export default Vue.extend({
 
       this.dialogDelete = false;
       this.getCompanies();
+      this.getAllShortCompanies();
     },
   },
   beforeRouteUpdate(to, from, next) {
     if (to.name === ROUTES.companies.name) {
-      this.init();
+      this.getCompanies();
+      this.getAllShortCompanies();
     }
     next();
   },
+  computed: {
+    ...mapState("companies", {
+      companiesData: "companies",
+    }),
+  },
   mounted() {
-    this.init();
+    this.getCompanies();
   },
 });
 </script>

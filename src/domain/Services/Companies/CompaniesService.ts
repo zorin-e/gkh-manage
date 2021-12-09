@@ -5,8 +5,10 @@ import {
   DeleteCompanyRequest,
   GetAllCompaniesRequest,
   GetCompanyRequest,
+  ShortCompanies,
   UpdateCompanyRequest,
 } from "@/infrastructure/Api/Companies/types";
+import { Response } from "@/infrastructure/Http";
 export class CompaniesService {
   constructor(private repository: Companies) {}
 
@@ -28,8 +30,19 @@ export class CompaniesService {
     return response;
   }
 
-  getAll(params?: GetAllCompaniesRequest) {
+  getAll(params = "") {
     return this.repository.getAll(params);
+  }
+
+  async getAllWithShortData(): Promise<ShortCompanies> {
+    const { payload } = await this.getAll();
+    const shortData = !payload.data
+      ? []
+      : payload.data.data.map((company) => ({
+          id: company.id,
+          name: company.name,
+        }));
+    return shortData;
   }
 
   delete(data: DeleteCompanyRequest) {
