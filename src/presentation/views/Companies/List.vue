@@ -20,11 +20,11 @@
         @update:page="nextPage"
         @update:items-per-page="changeItemsPerPage"
       >
-        <template #item.actions>
-          <v-icon class="mr-2">
+        <template #item.actions="{ item }">
+          <v-icon @click="edit(item.id)" class="mr-2">
             {{ mdiPencil }}
           </v-icon>
-          <v-icon @click="dialogDelete = true">
+          <v-icon @click="confirmDelete(item.id)">
             {{ mdiDelete }}
           </v-icon>
         </template>
@@ -32,13 +32,19 @@
       <router-view />
     </div>
 
-    <v-dialog :value="dialogDelete" max-width="290">
+    <v-dialog :value="dialogDelete" persistent max-width="290">
       <v-card>
-        <v-card-title> Удалить управляющую компанию? </v-card-title>
+        <v-card-title> Удалить компанию? </v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="dialogDelete = false"> Нет </v-btn>
-          <v-btn color="red darken-1" text @click="dialogDelete = false">
+          <v-btn
+            color="red darken-1"
+            :loading="isLoading"
+            :disabled="isLoading"
+            text
+            @click="deleteCompany"
+          >
             Да
           </v-btn>
         </v-card-actions>
@@ -50,23 +56,28 @@
 <script lang="ts">
 import { companiesService } from "@/bootstrap";
 import { ROUTES } from "@/domain/routes";
-import { GetCompanyResponse } from "@/infrastructure/Api/Companies/types";
+import {
+  CompanyId,
+  GetCompanyResponse,
+} from "@/infrastructure/Api/Companies/types";
 import { mdiDeleteOutline, mdiPencil } from "@mdi/js";
 
 import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
+      isLoading: false,
+      currentItemToDelete: null as null | CompanyId,
       isDataLoading: false,
       dialogDelete: false,
       routes: { ...ROUTES },
       mdiDelete: mdiDeleteOutline,
       mdiPencil,
       headers: [
-        { text: "Название", value: "name" },
-        { text: "Номер телефона", value: "phone" },
-        { text: "Индекс", value: "postcode" },
-        { text: "Адрес", value: "address" },
+        { text: "Название", value: "name", sortable: false },
+        { text: "Номер телефона", value: "phone", sortable: false },
+        { text: "Индекс", value: "postcode", sortable: false },
+        { text: "Адрес", value: "address", sortable: false },
         { text: "", value: "actions", sortable: false },
       ],
       companies: [] as Array<GetCompanyResponse>,
@@ -87,8 +98,6 @@ export default Vue.extend({
     },
     async getCompanies() {
       const requestParams = this.paramsToString(this.options);
-      console.log(requestParams);
-
       this.isDataLoading = true;
       const { payload, success } = await companiesService.getAll(requestParams);
       this.isDataLoading = false;
@@ -115,6 +124,40 @@ export default Vue.extend({
       this.options.perpage = count;
       this.getCompanies();
     },
+    edit(id: CompanyId) {
+      this.$router.push({
+        name: ROUTES.editCompany.name,
+        params: { id: String(id) },
+      });
+    },
+    confirmDelete(id: CompanyId) {
+      this.currentItemToDelete = id;
+      this.dialogDelete = true;
+    },
+    async deleteCompany() {
+      this.isLoading = true;
+      const { payload, success } = await companiesService.delete({
+        id: Number(this.currentItemToDelete),
+      });
+      this.isLoading = false;
+
+      if (!success && payload.message) {
+        this.$notify({
+          type: "error",
+          title: payload.message,
+        });
+        return;
+      }
+
+      this.dialogDelete = false;
+      this.getCompanies();
+    },
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.name === ROUTES.companies.name) {
+      this.init();
+    }
+    next();
   },
   mounted() {
     this.init();

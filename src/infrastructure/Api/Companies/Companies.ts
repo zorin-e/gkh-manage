@@ -4,6 +4,7 @@ import { queryStringify } from "@/infrastructure/queryStringify";
 import {
   AddCompanyRequest,
   AddCompanyResponse,
+  CompanyId,
   DeleteCompanyRequest,
   DeleteCompanyResponse,
   GetAllCompaniesRequest,
@@ -36,11 +37,12 @@ export class Companies {
   }
 
   async update(
+    id: CompanyId,
     data: UpdateCompanyRequest
   ): Promise<Response<UpdateCompanyResponse>> {
     return new Response(
       await this.http.request({
-        url: "/companies",
+        url: `/companies/${id}`,
         method: "put",
         data,
       })

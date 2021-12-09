@@ -1,6 +1,6 @@
 import { CommonList } from "../types";
 
-export type CompanyId = string;
+export type CompanyId = number;
 
 export type GetCompanyRequest = {
   id: CompanyId;

@@ -73,7 +73,7 @@ const routes: Array<RouteConfig> = [
       {
         path: "add",
         name: ROUTES.addCompany.name,
-        component: () => import("@/presentation/views/Companies/Modal.vue"),
+        component: () => import("@/presentation/views/Companies/Add.vue"),
         meta: {
           title: ROUTES.addCompany.title,
           layout: LayoutDefault,
@@ -83,7 +83,7 @@ const routes: Array<RouteConfig> = [
       {
         path: ":id",
         name: ROUTES.editCompany.name,
-        component: () => import("@/presentation/views/Companies/Modal.vue"),
+        component: () => import("@/presentation/views/Companies/Edit.vue"),
         meta: {
           title: ROUTES.editCompany.title,
           layout: LayoutDefault,
