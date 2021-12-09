@@ -14,11 +14,3 @@ export type CommonList<D> = {
   };
   data: Array<D>;
 };
-
-// export type ServerPayload<D> = {
-//   data?: D;
-//   messages?: {
-//     detail?: Array<ServerMessage>;
-//   };
-//   message?: string;
-// };

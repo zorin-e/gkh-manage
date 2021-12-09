@@ -1,13 +1,11 @@
 import { Http } from "@/infrastructure/Http";
 import { Response } from "@/infrastructure/Http/Response";
-import { queryStringify } from "@/infrastructure/queryStringify";
 import {
   AddCompanyRequest,
   AddCompanyResponse,
   CompanyId,
   DeleteCompanyRequest,
   DeleteCompanyResponse,
-  GetAllCompaniesRequest,
   GetAllCompaniesResponse,
   GetCompanyRequest,
   GetCompanyResponse,
@@ -49,9 +47,7 @@ export class Companies {
     );
   }
 
-  async getAll(
-    params?: GetAllCompaniesRequest
-  ): Promise<Response<GetAllCompaniesResponse>> {
+  async getAll(params?: string): Promise<Response<GetAllCompaniesResponse>> {
     return new Response(
       await this.http.request({
         url: `/companies?${params}`,

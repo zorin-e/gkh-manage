@@ -6,6 +6,9 @@ export type GetCompanyRequest = {
   id: CompanyId;
 };
 
+export type ShortCompany = { id: CompanyId; name: string };
+export type ShortCompanies = Array<ShortCompany>;
+
 export type GetCompanyResponse = {
   id: CompanyId;
   name: string;
