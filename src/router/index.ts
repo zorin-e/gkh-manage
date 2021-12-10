@@ -40,9 +40,9 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
-        path: "add",
+        path: "add/:companyId",
         name: ROUTES.addHouse.name,
-        component: () => import("@/presentation/views/Houses/Modal.vue"),
+        component: () => import("@/presentation/views/Houses/Add.vue"),
         meta: {
           title: ROUTES.addHouse.title,
           layout: LayoutDefault,
@@ -50,9 +50,9 @@ const routes: Array<RouteConfig> = [
         },
       },
       {
-        path: ":id",
+        path: ":companyId/:id",
         name: ROUTES.editHouse.name,
-        component: () => import("@/presentation/views/Houses/Modal.vue"),
+        component: () => import("@/presentation/views/Houses/Edit.vue"),
         meta: {
           title: ROUTES.editHouse.title,
           layout: LayoutDefault,
