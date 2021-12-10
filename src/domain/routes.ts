@@ -1,8 +1,8 @@
-type Routes = {
-  [key: string]: { title: string; name: string };
-};
+// type Routes = {
+//   [key: string]: { title: string; name: string };
+// };
 
-export const ROUTES: Routes = {
+export const ROUTES = {
   signIn: {
     title: "Вход",
     name: "SignIn",
