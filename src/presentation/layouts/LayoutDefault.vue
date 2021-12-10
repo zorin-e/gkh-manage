@@ -44,6 +44,7 @@
           label="Управляющая компания"
           class="mr-10"
           hide-details
+          :value="firstCompanyId"
           @change="setCompanyId"
         />
       </v-col>
@@ -106,11 +107,14 @@ export default Vue.extend({
       companies: "shortCompanies",
       selectedCompanyId: "selectedCompanyId",
     }),
-    listCompanies(): Map<string, string> {
+    listCompanies(): Array<{ text: string; value: number }> {
       return this.companies.map((company: GetCompanyResponse) => ({
         text: company.name,
         value: company.id,
       }));
+    },
+    firstCompanyId(): number | null {
+      return this.listCompanies[0]?.value || null;
     },
     title(): string {
       const meta = this.$route.meta;
@@ -121,8 +125,9 @@ export default Vue.extend({
       return "";
     },
   },
-  mounted() {
-    this.getCompanies();
+  async mounted() {
+    await this.getCompanies();
+    this.setCompanyId(this.firstCompanyId);
   },
 });
 </script>
