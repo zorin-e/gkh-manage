@@ -1,31 +1,17 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { AnyObject } from "@/domain/AnyObject.type";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Connection } from "./Connection.interface";
 import { Request } from "./Request.type";
 import { ServerResponse } from "./ServerResponse.type";
 
 export class Axios implements Connection {
-  private initialHeaders: AnyObject;
-  private config: AxiosRequestConfig;
-  private allHeaders: AnyObject;
+  private readonly instance: AxiosInstance;
 
   constructor(config?: AxiosRequestConfig) {
-    this.config = config || {};
-    this.initialHeaders = this.config.headers || {};
-    this.allHeaders = {
-      ...this.initialHeaders,
-    };
+    this.instance = axios.create(config);
   }
 
-  setHeaders(headers: AnyObject) {
-    this.allHeaders = {
-      ...this.allHeaders,
-      ...headers,
-    };
-  }
-
-  deleteHeader(header: string) {
-    delete this.allHeaders[header];
+  getInstance(): AxiosInstance {
+    return this.instance;
   }
 
   async request({
@@ -34,26 +20,13 @@ export class Axios implements Connection {
     data,
     config,
   }: Request): Promise<ServerResponse> {
-    const headers = config?.headers || {};
-    const isHeaders = Object.keys(headers).length > 0;
-    if (isHeaders) {
-      this.allHeaders = {
-        ...this.allHeaders,
-        ...headers,
-      };
-    }
-
     try {
-      const response = await axios
-        .create({
-          ...config,
-          headers: this.allHeaders,
-        })
-        .request({
-          url,
-          method,
-          data,
-        });
+      const response = await this.instance.request({
+        url,
+        method,
+        data,
+        ...config,
+      });
 
       const payloadData = response.data.data
         ? response.data

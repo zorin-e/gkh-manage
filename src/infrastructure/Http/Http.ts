@@ -5,14 +5,6 @@ import { ServerResponse } from "./ServerResponse.type";
 export class Http {
   constructor(private client: Connection) {}
 
-  setHeaders(headers: AnyObject) {
-    this.client.setHeaders(headers);
-  }
-
-  deleteHeader(header: string) {
-    this.client.deleteHeader(header);
-  }
-
   request({
     url,
     method = "get",
