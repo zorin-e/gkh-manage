@@ -1,7 +1,7 @@
 import { Auth } from "@/infrastructure/Api/Auth";
 import { SignInRequest, SignInResponse } from "@/infrastructure/Api/Auth/types";
 import { Response } from "@/infrastructure/Http";
-import { AuthStorage } from "@/infrastructure/Storage/AuthStorage";
+import { AuthStorage } from "@/domain/Services/Storage/AuthStorage";
 import { errorCodes } from "@/domain/constants/errorCodes";
 
 export class AuthService {
