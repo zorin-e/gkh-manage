@@ -2,7 +2,7 @@
   <div>
     <house
       submitText="Сохранить"
-      :is-loading="isLoading"
+      :is-loading="isLoading || !selectedCompanyId"
       :is-submit-loading="isSubmitLoading"
       :propForm="house"
       @submit="submit"
@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { housesService } from "@/bootstrap";
+import { ROUTES } from "@/domain/routes";
 import { UpdateHouseRequest } from "@/infrastructure/Api/Houses/types";
 import Vue from "vue";
 import { mapState } from "vuex";
@@ -79,6 +80,15 @@ export default Vue.extend({
           type: "success",
         });
       }
+
+      this.$router.push({ name: ROUTES.houses.name });
+    },
+  },
+  watch: {
+    selectedCompanyId(value) {
+      if (value) {
+        this.init();
+      }
     },
   },
   computed: {
@@ -90,7 +100,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.init();
+    if (this.selectedCompanyId) this.init();
   },
 });
 </script>

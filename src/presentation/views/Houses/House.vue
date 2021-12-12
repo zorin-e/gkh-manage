@@ -28,6 +28,7 @@
             <v-col cols="12">
               <v-text-field
                 label="Квартир"
+                type="number"
                 required
                 hide-details
                 :rules="requiredRules"
