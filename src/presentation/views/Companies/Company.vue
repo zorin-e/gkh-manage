@@ -1,5 +1,12 @@
 <template>
-  <v-dialog :value="true" persistent max-width="400px">
+  <v-dialog
+    :value="true"
+    persistent
+    max-width="400px"
+    v-on="
+      !isFormChanged ? { 'click:outside': close, keydown: closeByEscape } : {}
+    "
+  >
     <v-form v-model="valid" @submit.prevent="submit">
       <v-card :loading="isLoading" :disabled="isLoading">
         <v-card-title v-if="title">
@@ -98,6 +105,11 @@ export default Vue.extend({
     };
   },
   methods: {
+    closeByEscape(event: any) {
+      if (event.keyCode === 27) {
+        this.close();
+      }
+    },
     close() {
       this.$router.push({ name: ROUTES.companies.name });
     },

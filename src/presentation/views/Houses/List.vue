@@ -1,13 +1,6 @@
 <template>
   <v-col xs="12" sm="10" md="9" lg="7">
-    <v-alert
-      v-if="!selectedCompanyId"
-      border="left"
-      color="orange"
-      type="warning"
-      >Выберите управляющую компанию</v-alert
-    >
-    <div v-if="selectedCompanyId" class="text-right">
+    <div class="text-right">
       <v-btn
         color="primary"
         dark
@@ -25,7 +18,7 @@
         :headers="headers"
         :items="housesData.data"
         :items-per-page="options.perpage"
-        :loading="isDataLoading"
+        :loading="isDataLoading || !selectedCompanyId"
         :server-items-length="housesData.pagination.total"
         :options="{ page: options.page }"
         class="elevation-1 mt-5"

@@ -34,7 +34,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app max-height="56" elevation="3" color="white">
+    <v-app-bar :absolute="true" max-height="56" elevation="3" color="white">
       <v-spacer></v-spacer>
       <v-col class="d-flex" cols="5">
         <v-icon class="mr-2">{{ mdiCity }}</v-icon>

@@ -1,5 +1,12 @@
 <template>
-  <v-dialog :value="true" persistent max-width="400px">
+  <v-dialog
+    :value="true"
+    :persistent="isFormChanged"
+    v-on="
+      !isFormChanged ? { 'click:outside': close, keydown: closeByEscape } : {}
+    "
+    max-width="400px"
+  >
     <v-form v-model="valid" @submit.prevent="submit">
       <v-card :loading="isLoading" :disabled="isLoading">
         <v-card-title v-if="title">
@@ -28,6 +35,7 @@
             <v-col cols="12">
               <v-text-field
                 label="Квартир"
+                type="number"
                 required
                 hide-details
                 :rules="requiredRules"
@@ -82,6 +90,11 @@ export default Vue.extend({
     };
   },
   methods: {
+    closeByEscape(event: any) {
+      if (event.keyCode === 27) {
+        this.close();
+      }
+    },
     close() {
       this.$router.push({ name: ROUTES.houses.name });
     },

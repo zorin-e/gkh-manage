@@ -3,7 +3,7 @@
     <component :is="layout">
       <router-view />
     </component>
-    <notifications position="bottom right v-alert" />
+    <notifications position="top right" classes="my-notify" />
   </v-app>
 </template>
 
@@ -19,3 +19,13 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.vue-notification-group {
+  padding: 10px !important;
+}
+.my-notify {
+  padding: 10px 15px;
+  color: #fff;
+}
+</style>
