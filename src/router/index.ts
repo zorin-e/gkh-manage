@@ -101,8 +101,35 @@ const routes: Array<RouteConfig> = [
     name: ROUTES.services.name,
   },
   {
-    path: "/issues",
-    name: ROUTES.issues.name,
+    path: "/orders",
+    name: ROUTES.orders.name,
+    component: () => import("@/presentation/views/Orders/List.vue"),
+    meta: {
+      title: ROUTES.orders.title,
+      layout: LayoutDefault,
+    },
+    children: [
+      {
+        path: "add/:companyId",
+        name: ROUTES.addOrder.name,
+        component: () => import("@/presentation/views/Orders/Add.vue"),
+        meta: {
+          title: ROUTES.addOrder.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+      {
+        path: ":companyId/:id",
+        name: ROUTES.editOrder.name,
+        component: () => import("@/presentation/views/Orders/Edit.vue"),
+        meta: {
+          title: ROUTES.editOrder.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+    ],
   },
   {
     path: "/calendar",

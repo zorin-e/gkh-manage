@@ -51,8 +51,16 @@ export const ROUTES = {
     title: "Услуги",
     name: "Services",
   },
-  issues: {
+  orders: {
     title: "Заявки",
-    name: "Issues",
+    name: "Orders",
+  },
+  addOrder: {
+    title: "Новая заявка",
+    name: "AddOrder",
+  },
+  editOrder: {
+    title: "Редатирование заявки",
+    name: "EditOrder",
   },
 };

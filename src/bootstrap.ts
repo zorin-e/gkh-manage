@@ -14,6 +14,8 @@ import router from "@/router";
 import { ROUTES } from "./domain/routes";
 import { RefreshTokenService } from "./domain/Services/RefreshToken/RefreshTokenService";
 import { RefreshToken } from "./infrastructure/Api/RefreshToken";
+import { OrderService } from "./domain/Services/Orders";
+import { Orders } from "./infrastructure/Api/Orders";
 const authToken = new Token({ tokenName: "access_token" });
 const axiosAdapter = new Axios();
 const axiosInstance = axiosAdapter.getInstance();
@@ -25,6 +27,7 @@ const signOutService = new SignOutService(authStorage);
 const companiesService = new CompaniesService(new Companies(http));
 const housesService = new HousesService(new Houses(http));
 const refreshTokenService = new RefreshTokenService(new RefreshToken(http));
+const ordersService = new OrderService(new Orders(http));
 
 const refreshTokenFn = async () => {
   const { refreshToken } = await refreshTokenService.get();
@@ -90,5 +93,6 @@ export {
   companiesService,
   housesService,
   refreshTokenService,
+  ordersService,
   refreshTokenFn,
 };

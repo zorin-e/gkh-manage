@@ -1,8 +1,5 @@
 import { companiesService } from "@/bootstrap";
-import {
-  CompanyId,
-  GetAllCompaniesRequest,
-} from "@/infrastructure/Api/Companies/types";
+import { CompanyId } from "@/infrastructure/Api/Companies/types";
 import { ActionTree } from "vuex";
 import { CompaniesState } from "./types";
 
