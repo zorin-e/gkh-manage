@@ -83,7 +83,7 @@ export default Vue.extend({
       items: [
         { title: "Дашборд", icon: mdiHome, to: ROUTES.dashboard.name },
         { title: "Дома", icon: mdiMapOutline, to: ROUTES.houses.name },
-        { title: "Заявки", icon: mdiPlusCircle, to: ROUTES.issues.name },
+        { title: "Заявки", icon: mdiPlusCircle, to: ROUTES.orders.name },
         { title: "Календарь", icon: mdiCalendar, to: ROUTES.calendar.name },
       ],
 

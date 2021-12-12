@@ -13,4 +13,13 @@ describe("objectParamsToString", () => {
     const params = objectParamsToString();
     expect(params).toBe("");
   });
+  it(`should be relations[]=tenant as result`, () => {
+    const result = "relations[]=tenant";
+    const params = objectParamsToString({
+      relations: {
+        "": "tenant",
+      },
+    });
+    expect(params).toBe(result);
+  });
 });

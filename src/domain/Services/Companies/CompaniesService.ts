@@ -35,7 +35,7 @@ export class CompaniesService {
   }
 
   async getAllWithShortData(): Promise<ShortCompanies> {
-    const { payload } = await this.getAll();
+    const { payload } = await this.getAll("paginate[perpage]=50");
     const shortData = !payload.data
       ? []
       : payload.data.data.map((company) => ({
