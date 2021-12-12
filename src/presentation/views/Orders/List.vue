@@ -14,6 +14,7 @@
       >
         Добавить
       </v-btn>
+      <filters />
       <v-data-table
         :headers="headers"
         :items="ordersData.data"
@@ -66,7 +67,12 @@ import { objectParamsToString } from "@/domain/objectParamsToString";
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import { GetOrderResponse, OrderId } from "@/infrastructure/Api/Orders/types";
+import Filters from "./Filters.vue";
+
 export default Vue.extend({
+  components: {
+    Filters,
+  },
   data() {
     return {
       isLoading: false,
