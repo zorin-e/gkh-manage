@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { companiesService } from "@/bootstrap";
+import { ROUTES } from "@/domain/routes";
 import { UpdateCompanyRequest } from "@/infrastructure/Api/Companies/types";
 import Vue from "vue";
 import Company from "./Company.vue";
@@ -74,6 +75,11 @@ export default Vue.extend({
           type: "success",
         });
       }
+
+      this.close();
+    },
+    close() {
+      this.$router.push({ name: ROUTES.houses.name });
     },
   },
   computed: {

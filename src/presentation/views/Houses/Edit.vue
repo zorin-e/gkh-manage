@@ -81,6 +81,9 @@ export default Vue.extend({
         });
       }
 
+      this.close();
+    },
+    close() {
       this.$router.push({ name: ROUTES.houses.name });
     },
   },
