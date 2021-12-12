@@ -19,6 +19,7 @@ export class HousesService {
     const response = await this.repository.add(companyId, house);
     const { success } = response;
     if (success) response.payload.message = "Дом создан";
+    else response.payload.message = "Проверьте правильность заполнения полей";
     return response;
   }
 
@@ -26,6 +27,7 @@ export class HousesService {
     const response = await this.repository.update(companyId, id, house);
     const { success } = response;
     if (success) response.payload.message = "Дом сохранён";
+    else response.payload.message = "Проверьте правильность заполнения полей";
     return response;
   }
 
