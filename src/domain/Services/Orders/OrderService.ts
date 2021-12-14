@@ -1,4 +1,3 @@
-import { objectParamsToString } from "@/domain/objectParamsToString";
 import { CompanyId } from "@/infrastructure/Api/Companies/types";
 import { Orders } from "@/infrastructure/Api/Orders";
 import {
@@ -6,6 +5,8 @@ import {
   DeleteOrderRequest,
   GetAllOrdersResponse,
   GetOrderRequest,
+  OrderId,
+  UpdateOrderRequest,
 } from "@/infrastructure/Api/Orders/types";
 import { Response } from "@/infrastructure/Http";
 
@@ -24,13 +25,13 @@ export class OrderService {
     return response;
   }
 
-  // async update(orderId: CompanyId, id: OrderId, order: UpdateOrderRequest) {
-  //   const response = await this.repository.update(orderId, id, order);
-  //   const { success } = response;
-  //   if (success) response.payload.message = "Дом сохранён";
-  //   else response.payload.message = "Проверьте правильность заполнения полей";
-  //   return response;
-  // }
+  async update(orderId: CompanyId, id: OrderId, order: UpdateOrderRequest) {
+    const response = await this.repository.update(orderId, id, order);
+    const { success } = response;
+    if (success) response.payload.message = "Дом сохранён";
+    else response.payload.message = "Проверьте правильность заполнения полей";
+    return response;
+  }
 
   getAll(
     companyId: CompanyId,

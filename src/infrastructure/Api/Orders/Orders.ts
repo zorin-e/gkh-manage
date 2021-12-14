@@ -9,6 +9,9 @@ import {
   GetAllOrdersResponse,
   GetOrderRequest,
   GetOrderResponse,
+  OrderId,
+  UpdateOrderRequest,
+  UpdateOrderResponse,
 } from "./types";
 
 export class Orders {
@@ -38,19 +41,19 @@ export class Orders {
     );
   }
 
-  // async update(
-  //   companyId: CompanyId,
-  //   id: OrderId,
-  //   data: UpdateOrderRequest
-  // ): Promise<Response<UpdateOrderResponse>> {
-  //   return new Response(
-  //     await this.http.request({
-  //       url: `/buildings/${companyId}/${id}`,
-  //       method: "put",
-  //       data,
-  //     })
-  //   );
-  // }
+  async update(
+    companyId: CompanyId,
+    id: OrderId,
+    data: UpdateOrderRequest
+  ): Promise<Response<UpdateOrderResponse>> {
+    return new Response(
+      await this.http.request({
+        url: `/buildings/${companyId}/${id}`,
+        method: "put",
+        data,
+      })
+    );
+  }
 
   async getAll(
     companyId: CompanyId,

@@ -64,9 +64,22 @@ export type AddOrderRequest = {
 export type AddOrderResponse = GetOrderResponse;
 
 export type UpdateOrderRequest = {
-  name?: string;
-  address?: string;
-  rooms_count?: string;
+  company_id?: CompanyId;
+  tenant_id?: TenantId;
+  building_id?: HouseId;
+  room_number?: number;
+  date?: Date;
+  time_from?: string;
+  time_to?: string;
+  priority?: number;
+  status?: number;
+  comment?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  tenant?: Tenant;
+  services?: Services;
+  performers?: Array<Performer>;
+  attachments?: Array<string>;
 };
 
 export type UpdateOrderResponse = GetOrderResponse;

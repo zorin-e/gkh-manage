@@ -1,44 +1,44 @@
 <template>
   <div>
-    <house
+    <order
       submitText="Сохранить"
       :is-loading="isLoading || !selectedCompanyId"
       :is-submit-loading="isSubmitLoading"
-      :propForm="house"
+      :propForm="order"
       @submit="submit"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { housesService } from "@/bootstrap";
+import { ordersService } from "@/bootstrap";
 import { ROUTES } from "@/domain/routes";
-import { UpdateHouseRequest } from "@/infrastructure/Api/Houses/types";
+import { UpdateOrderRequest } from "@/infrastructure/Api/Orders/types";
 import Vue from "vue";
 import { mapState } from "vuex";
-import House from "./Order.vue";
+import Order from "./Order.vue";
 
 export default Vue.extend({
   components: {
-    House,
+    Order,
   },
   data() {
     return {
       isLoading: false,
       isSubmitLoading: false,
-      house: {},
+      order: {},
     };
   },
   methods: {
-    updateHouse(house: UpdateHouseRequest) {
-      this.house = {
-        ...this.house,
-        ...house,
+    updateOrder(order: UpdateOrderRequest) {
+      this.order = {
+        ...this.order,
+        ...order,
       };
     },
     async init() {
       this.isLoading = true;
-      const { success, payload } = await housesService.get({
+      const { success, payload } = await ordersService.get({
         companyId: this.selectedCompanyId,
         id: this.id,
       });
@@ -52,14 +52,14 @@ export default Vue.extend({
         return;
       }
 
-      this.updateHouse({ ...payload.data });
+      this.updateOrder({ ...payload.data });
     },
-    async submit(house: UpdateHouseRequest) {
+    async submit(order: UpdateOrderRequest) {
       this.isSubmitLoading = true;
-      const { payload, success } = await housesService.update(
+      const { payload, success } = await ordersService.update(
         this.selectedCompanyId,
         this.id,
-        house
+        order
       );
       this.isSubmitLoading = false;
       const { message } = payload;
@@ -72,7 +72,7 @@ export default Vue.extend({
         return;
       }
 
-      this.updateHouse({ ...house });
+      this.updateOrder({ ...order });
 
       if (message) {
         this.$notify({
@@ -84,7 +84,7 @@ export default Vue.extend({
       this.close();
     },
     close() {
-      this.$router.push({ name: ROUTES.houses.name });
+      this.$router.push({ name: ROUTES.orders.name });
     },
   },
   watch: {

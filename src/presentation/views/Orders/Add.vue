@@ -1,5 +1,5 @@
 <template>
-  <house
+  <order
     @submit="submit"
     submitText="Создать"
     :is-loading="isLoading"
@@ -8,15 +8,15 @@
 </template>
 
 <script lang="ts">
-import { housesService } from "@/bootstrap";
+import { ordersService } from "@/bootstrap";
 import { ROUTES } from "@/domain/routes";
-import { AddHouseRequest } from "@/infrastructure/Api/Houses/types";
+import { AddOrderRequest } from "@/infrastructure/Api/Orders/types";
 import Vue from "vue";
 import { mapState } from "vuex";
-import House from "./Order.vue";
+import Order from "./Order.vue";
 export default Vue.extend({
   components: {
-    House,
+    Order,
   },
   data() {
     return {
@@ -25,11 +25,11 @@ export default Vue.extend({
     };
   },
   methods: {
-    async submit(house: AddHouseRequest) {
+    async submit(order: AddOrderRequest) {
       this.isSubmitLoading = true;
-      const { payload, success } = await housesService.add(
+      const { payload, success } = await ordersService.add(
         this.selectedCompanyId,
-        house
+        order
       );
       this.isSubmitLoading = false;
       const { message } = payload;
@@ -49,7 +49,7 @@ export default Vue.extend({
         });
       }
 
-      this.$router.push({ name: ROUTES.houses.name });
+      this.$router.push({ name: ROUTES.orders.name });
     },
   },
   computed: {
