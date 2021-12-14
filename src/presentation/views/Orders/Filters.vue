@@ -35,13 +35,7 @@
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker
-          v-model="date"
-          no-title
-          scrollable
-          range
-          :max="currentDate"
-        >
+        <v-date-picker v-model="date" no-title scrollable range>
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
           <v-btn text color="primary" @click="$refs.menu.save(date)">
