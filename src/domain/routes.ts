@@ -43,9 +43,9 @@ export const ROUTES = {
     title: "Редатирование УК",
     name: "EditCompany",
   },
-  employers: {
+  employees: {
     title: "Сотрудники",
-    name: "Employers",
+    name: "Employees",
   },
   services: {
     title: "Услуги",

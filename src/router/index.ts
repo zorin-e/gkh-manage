@@ -93,8 +93,8 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
-    path: "/employers",
-    name: ROUTES.employers.name,
+    path: "/employees",
+    name: ROUTES.employees.name,
   },
   {
     path: "/services",

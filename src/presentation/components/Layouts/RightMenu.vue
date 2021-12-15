@@ -46,8 +46,8 @@ export default Vue.extend({
           to: ROUTES.companies.name,
         },
         {
-          title: ROUTES.employers.title,
-          to: ROUTES.employers.name,
+          title: ROUTES.employees.title,
+          to: ROUTES.employees.name,
         },
         {
           title: ROUTES.services.title,
