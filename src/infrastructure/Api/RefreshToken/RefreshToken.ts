@@ -5,6 +5,9 @@ export class RefreshToken {
   constructor(private http: Http) {}
 
   get(): Promise<Response<{ token: TokenType }>> {
-    return this.http.request({ url: "/auth/refresh" });
+    return this.http.request({
+      method: "post",
+      url: "/oauth/token",
+    });
   }
 }

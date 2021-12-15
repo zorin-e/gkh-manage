@@ -1,9 +1,9 @@
 export type SignInRequest = {
-  email: string;
+  username: string;
   password: string;
 };
 
 export type SignInResponse = {
-  token: string;
+  access_token: string;
   message?: string;
 };

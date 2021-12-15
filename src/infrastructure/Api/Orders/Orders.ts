@@ -23,7 +23,7 @@ export class Orders {
   }: GetOrderRequest): Promise<Response<GetOrderResponse>> {
     return new Response(
       await this.http.request({
-        url: `/orders/${companyId}/${id}`,
+        url: `/api/orders/${companyId}/${id}`,
       })
     );
   }
@@ -34,7 +34,7 @@ export class Orders {
   ): Promise<Response<AddOrderResponse>> {
     return new Response(
       await this.http.request({
-        url: `/orders/${companyId}`,
+        url: `/api/orders/${companyId}`,
         method: "post",
         data: order,
       })
@@ -61,7 +61,7 @@ export class Orders {
   ): Promise<Response<GetAllOrdersResponse>> {
     return new Response(
       await this.http.request({
-        url: `/orders/${companyId}?${params}`,
+        url: `/api/orders/${companyId}?${params}`,
       })
     );
   }
@@ -72,7 +72,7 @@ export class Orders {
   }: DeleteOrderRequest): Promise<Response<DeleteOrderResponse>> {
     return new Response(
       await this.http.request({
-        url: `/orders/${companyId}/${id}`,
+        url: `/api/orders/${companyId}/${id}`,
         method: "delete",
       })
     );

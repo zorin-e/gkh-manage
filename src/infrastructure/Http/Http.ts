@@ -11,7 +11,7 @@ export class Http {
     data,
     config,
   }: Request): Promise<ServerResponse> {
-    if (url.startsWith("/")) {
+    if (url.startsWith("/") && process.env.NODE_ENV !== "development") {
       url = `${process.env.VUE_APP_API_ADDRESS}${url}`;
     }
 

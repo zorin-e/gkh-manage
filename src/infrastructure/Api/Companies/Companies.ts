@@ -40,7 +40,7 @@ export class Companies {
   ): Promise<Response<UpdateCompanyResponse>> {
     return new Response(
       await this.http.request({
-        url: `/companies/${id}`,
+        url: `/api/companies/${id}`,
         method: "put",
         data,
       })
@@ -50,7 +50,7 @@ export class Companies {
   async getAll(params?: string): Promise<Response<GetAllCompaniesResponse>> {
     return new Response(
       await this.http.request({
-        url: `/companies?${params}`,
+        url: `/api/companies?${params}`,
       })
     );
   }
@@ -60,7 +60,7 @@ export class Companies {
   }: DeleteCompanyRequest): Promise<Response<DeleteCompanyResponse>> {
     return new Response(
       await this.http.request({
-        url: `/companies/${id}`,
+        url: `/api/companies/${id}`,
         method: "delete",
       })
     );

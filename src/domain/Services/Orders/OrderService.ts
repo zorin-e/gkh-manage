@@ -42,7 +42,7 @@ export class OrderService {
 
   async getAllWithConcatenatedData(companyId: CompanyId, params = "") {
     const stringParams =
-      "relations[]=tenant&relations[]=performers&relations[]=services";
+      "relations[]=tenant&relations[]=performers&relations[]=services.category";
     const response = await this.repository.getAll(companyId, stringParams);
     const { payload, success, status } = response;
     if (!success) return response;

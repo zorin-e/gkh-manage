@@ -23,7 +23,7 @@ export class Houses {
   }: GetHouseRequest): Promise<Response<GetHouseResponse>> {
     return new Response(
       await this.http.request({
-        url: `/buildings/${companyId}/${id}`,
+        url: `/api/buildings/${companyId}/${id}`,
       })
     );
   }
@@ -34,7 +34,7 @@ export class Houses {
   ): Promise<Response<AddHouseResponse>> {
     return new Response(
       await this.http.request({
-        url: `/buildings/${companyId}`,
+        url: `/api/buildings/${companyId}`,
         method: "post",
         data: house,
       })
@@ -48,7 +48,7 @@ export class Houses {
   ): Promise<Response<UpdateHouseResponse>> {
     return new Response(
       await this.http.request({
-        url: `/buildings/${companyId}/${id}`,
+        url: `/api/buildings/${companyId}/${id}`,
         method: "put",
         data,
       })
@@ -61,7 +61,7 @@ export class Houses {
   ): Promise<Response<GetAllHousesResponse>> {
     return new Response(
       await this.http.request({
-        url: `/buildings/${companyId}?${params}`,
+        url: `/api/buildings/${companyId}?${params}`,
       })
     );
   }
@@ -72,7 +72,7 @@ export class Houses {
   }: DeleteHouseRequest): Promise<Response<DeleteHouseResponse>> {
     return new Response(
       await this.http.request({
-        url: `/buildings/${companyId}/${id}`,
+        url: `/api/buildings/${companyId}/${id}`,
         method: "delete",
       })
     );

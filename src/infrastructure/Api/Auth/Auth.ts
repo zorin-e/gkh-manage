@@ -6,9 +6,14 @@ export class Auth {
   async signIn(data: SignInRequest): Promise<Response<SignInResponse>> {
     return new Response(
       await this.http.request({
-        url: "/auth/login",
+        url: "/oauth/token",
         method: "post",
-        data,
+        data: {
+          grant_type: "password",
+          client_secret: "lId0qZ33z1lnjFHLOTIylAvr62EwdXMDye4v4GGh",
+          client_id: 2,
+          ...data,
+        },
       })
     );
   }

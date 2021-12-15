@@ -13,7 +13,7 @@
         Вход в систему управления ИнТехСервис
       </div>
       <v-text-field
-        v-model="form.email"
+        v-model="form.username"
         label="Электронная почта"
         required
         :rules="emailRules"
@@ -60,7 +60,7 @@ export default Vue.extend({
         (email: string) => isValidEmail(email) || "Не верная электронная почта",
       ],
       form: {
-        email: "",
+        username: "",
         password: "",
       },
       valid: false,

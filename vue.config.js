@@ -11,4 +11,7 @@ module.exports = {
       config.output.filename("[name].[hash].js").end();
     }
   },
+  devServer: {
+    proxy: process.env.VUE_APP_API_ADDRESS,
+  },
 };

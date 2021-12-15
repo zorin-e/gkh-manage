@@ -10,6 +10,7 @@ export class AuthService {
   async signIn(data: SignInRequest): Promise<Response<SignInResponse>> {
     const response = await this.auth.signIn(data);
     const { payload, success, status } = response;
+
     if (!success) {
       return {
         status,
@@ -23,8 +24,8 @@ export class AuthService {
         },
       };
     }
-    if (payload.data?.token) {
-      this.authStorage.set(payload.data.token);
+    if (payload.data?.access_token) {
+      this.authStorage.set(payload.data.access_token);
     }
     return response;
   }
