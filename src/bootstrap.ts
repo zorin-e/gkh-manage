@@ -16,6 +16,10 @@ import { RefreshTokenService } from "./domain/Services/RefreshToken/RefreshToken
 import { RefreshToken } from "./infrastructure/Api/RefreshToken";
 import { OrderService } from "./domain/Services/Orders";
 import { Orders } from "./infrastructure/Api/Orders";
+import { EmployeesService } from "./domain/Services/Employees";
+import { Employees } from "./infrastructure/Api/Employees";
+import { SpecialistsService } from "./domain/Services/Specialists";
+import { Specialists } from "./infrastructure/Api/Specialists";
 const authToken = new Token({ tokenName: "access_token" });
 const axiosAdapter = new Axios();
 const axiosInstance = axiosAdapter.getInstance();
@@ -28,6 +32,8 @@ const companiesService = new CompaniesService(new Companies(http));
 const housesService = new HousesService(new Houses(http));
 const refreshTokenService = new RefreshTokenService(new RefreshToken(http));
 const ordersService = new OrderService(new Orders(http));
+const employeesService = new EmployeesService(new Employees(http));
+const specialistsService = new SpecialistsService(new Specialists(http));
 
 const refreshTokenFn = async () => {
   const { refreshToken } = await refreshTokenService.get();
@@ -94,5 +100,7 @@ export {
   housesService,
   refreshTokenService,
   ordersService,
+  employeesService,
+  specialistsService,
   refreshTokenFn,
 };

@@ -47,6 +47,14 @@ export const ROUTES = {
     title: "Сотрудники",
     name: "Employees",
   },
+  addEmployee: {
+    title: "Новый сотрудник",
+    name: "AddEmployees",
+  },
+  editEmployee: {
+    title: "Редактирование сотрудника",
+    name: "EditEmployee",
+  },
   services: {
     title: "Услуги",
     name: "Services",
@@ -62,5 +70,17 @@ export const ROUTES = {
   editOrder: {
     title: "Редатирование заявки",
     name: "EditOrder",
+  },
+  specialists: {
+    title: "Специалисты",
+    name: "Specialists",
+  },
+  addSpecialist: {
+    title: "Новый специалист",
+    name: "AddSpecialist",
+  },
+  editSpecialist: {
+    title: "Редатирование специалиста",
+    name: "EditSpecialist",
   },
 };

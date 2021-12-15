@@ -10,7 +10,7 @@ export class Auth {
         method: "post",
         data: {
           grant_type: "password",
-          client_secret: "lId0qZ33z1lnjFHLOTIylAvr62EwdXMDye4v4GGh",
+          client_secret: "FeAo1dklNqDtA8HMj7ishBZxaGiVfJS5t7ykpJTk",
           client_id: 2,
           ...data,
         },

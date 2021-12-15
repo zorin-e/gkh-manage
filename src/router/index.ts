@@ -95,6 +95,33 @@ const routes: Array<RouteConfig> = [
   {
     path: "/employees",
     name: ROUTES.employees.name,
+    component: () => import("@/presentation/views/Employees/List.vue"),
+    meta: {
+      title: ROUTES.employees.title,
+      layout: LayoutDefault,
+    },
+    children: [
+      {
+        path: "edit",
+        name: ROUTES.addEmployee.name,
+        component: () => import("@/presentation/views/Employees/Add.vue"),
+        meta: {
+          title: ROUTES.addEmployee.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+      {
+        path: ":id",
+        name: ROUTES.editEmployee.name,
+        component: () => import("@/presentation/views/Employees/Edit.vue"),
+        meta: {
+          title: ROUTES.editEmployee.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+    ],
   },
   {
     path: "/services",
@@ -125,6 +152,37 @@ const routes: Array<RouteConfig> = [
         component: () => import("@/presentation/views/Orders/Edit.vue"),
         meta: {
           title: ROUTES.editOrder.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/specialists",
+    name: ROUTES.specialists.name,
+    component: () => import("@/presentation/views/Specialists/List.vue"),
+    meta: {
+      title: ROUTES.specialists.title,
+      layout: LayoutDefault,
+    },
+    children: [
+      {
+        path: "edit",
+        name: ROUTES.addSpecialist.name,
+        component: () => import("@/presentation/views/Specialists/Add.vue"),
+        meta: {
+          title: ROUTES.addSpecialist.title,
+          layout: LayoutDefault,
+          isModal: true,
+        },
+      },
+      {
+        path: ":id",
+        name: ROUTES.editSpecialist.name,
+        component: () => import("@/presentation/views/Specialists/Edit.vue"),
+        meta: {
+          title: ROUTES.editSpecialist.title,
           layout: LayoutDefault,
           isModal: true,
         },

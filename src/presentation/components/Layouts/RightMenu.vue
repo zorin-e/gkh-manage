@@ -50,6 +50,10 @@ export default Vue.extend({
           to: ROUTES.employees.name,
         },
         {
+          title: ROUTES.specialists.title,
+          to: ROUTES.specialists.name,
+        },
+        {
           title: ROUTES.services.title,
           to: ROUTES.services.name,
         },

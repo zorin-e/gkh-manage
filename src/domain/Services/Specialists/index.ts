@@ -1,0 +1,1 @@
+export { SpecialistsService } from "./SpecialistsService";
