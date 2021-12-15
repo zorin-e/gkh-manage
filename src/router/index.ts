@@ -192,6 +192,11 @@ const routes: Array<RouteConfig> = [
   {
     path: "/calendar",
     name: ROUTES.calendar.name,
+    component: () => import("@/presentation/views/Calendar/Calendar.vue"),
+    meta: {
+      title: ROUTES.calendar.title,
+      layout: LayoutDefault,
+    },
   },
 ];
 
